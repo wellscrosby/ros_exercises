@@ -157,7 +157,7 @@ include_directories(
 # all install targets should use catkin DESTINATION variables
 # See http://ros.org/doc/api/catkin/html/adv_user_guide/variables.html
 
-catkin_install_python(PROGRAMS src/simple_publisher.py src/simple_subscriber.py
+catkin_install_python(PROGRAMS simple_publisher.py simple_subscriber.py fake_scan_publisher.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
