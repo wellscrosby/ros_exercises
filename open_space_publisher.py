@@ -1,14 +1,19 @@
 #!/usr/bin/env python
 import rospy
-from std_msgs.msg import Float32, LaserScan
+from sensor_msgs.msg import LaserScan
+from std_msgs.msg import Float32
 from math import log
 
 
 def callback(data):
-    pub = rospy.Publisher('random_float_log', Float32)
-    ln_number = log(data.data)
-    rospy.loginfo(ln_number)
-    pub.publish(ln_number)
+    pub1 = rospy.Publisher('open_space/distance', Float32)
+    pub2 = rospy.Publisher('open_space/angle', Float32)
+    max_distance = max(data.ranges)
+    max_index = data.ranges.index(max_distance)
+    angle = (max_index - 200) * (1.0/300.0) * 3.14159265
+    print(angle)
+    pub1.publish(max_distance)
+    pub2.publish(angle)
 
 
 def simple_subscriber():
@@ -20,8 +25,10 @@ def simple_subscriber():
     # run simultaneously.
     rospy.init_node('open_space_publisher')
 
-    rospy.Subscriber('fake_scan', LaserScan, callback)
-
+    rate = rospy.Rate(20)
+    while not rospy.is_shutdown():
+        rospy.Subscriber('fake_scan', LaserScan, callback)
+        rate.sleep()
     # spin() simply keeps python from exiting until this node is stopped
     rospy.spin()
 
