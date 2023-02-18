@@ -2,18 +2,21 @@
 import rospy
 from sensor_msgs.msg import LaserScan
 from std_msgs.msg import Float32
+from ros_exercises.msg import OpenSpace
 from math import log
 
 
 def callback(data):
-    pub1 = rospy.Publisher('open_space/distance', Float32)
-    pub2 = rospy.Publisher('open_space/angle', Float32)
+    pub = rospy.Publisher('open_space', OpenSpace)
     max_distance = max(data.ranges)
     max_index = data.ranges.index(max_distance)
-    angle = (max_index - 200) * (1.0/300.0) * 3.14159265
-    print(angle)
-    pub1.publish(max_distance)
-    pub2.publish(angle)
+
+    my_message = OpenSpace()
+    my_message.angle = (max_index - 200) * (1.0/300.0) * 3.14159265
+    my_message.distance = max_distance
+
+    # rospy.loginfo(my_message)
+    pub.publish(my_message)
 
 
 def simple_subscriber():

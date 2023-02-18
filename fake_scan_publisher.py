@@ -21,10 +21,9 @@ def talker():
         fake_scan.range_min = 1.0
         fake_scan.range_max = 10.0
 
-        ranges_length = int(math.ceil(
-            abs(fake_scan.angle_min - fake_scan.angle_max) / fake_scan.angle_increment))
+        # ranges_length = int(math.ceil(abs(fake_scan.angle_min - fake_scan.angle_max) / fake_scan.angle_increment))
         my_ranges = []
-        for _ in range(0, ranges_length + 1):
+        for _ in range(0, 401):
             my_ranges.append(random.uniform(
                 fake_scan.range_min, fake_scan.range_max))
         fake_scan.ranges = my_ranges
