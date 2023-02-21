@@ -7,7 +7,7 @@ from math import log
 
 
 def callback(data):
-    pub = rospy.Publisher('open_space', OpenSpace)
+    pub = rospy.Publisher(rospy.get_param('/open_space_publisher_topic', 'open_space'), OpenSpace)
     max_distance = max(data.ranges)
     max_index = data.ranges.index(max_distance)
 
@@ -30,7 +30,7 @@ def simple_subscriber():
 
     rate = rospy.Rate(20)
     while not rospy.is_shutdown():
-        rospy.Subscriber('fake_scan', LaserScan, callback)
+        rospy.Subscriber(rospy.get_param('/open_space_subscriber_topic', 'fake_scan'), LaserScan, callback)
         rate.sleep()
     # spin() simply keeps python from exiting until this node is stopped
     rospy.spin()
