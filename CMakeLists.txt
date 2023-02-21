@@ -157,7 +157,7 @@ include_directories(
 # all install targets should use catkin DESTINATION variables
 # See http://ros.org/doc/api/catkin/html/adv_user_guide/variables.html
 
-catkin_install_python(PROGRAMS simple_publisher.py simple_subscriber.py fake_scan_publisher.py open_space_publisher.py dynamic_tf_cam_publisher.py
+catkin_install_python(PROGRAMS simple_publisher.py simple_subscriber.py fake_scan_publisher.py open_space_publisher.py dynamic_tf_cam_publisher.py static_tf_cam_publisher.py base_link_tf_pub.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
