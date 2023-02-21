@@ -31,8 +31,8 @@ def talker():
         try:
             base_link_transform = tfBuffer.lookup_transform(
                 "world", "base_link_gt", rospy.Time())
-            print("--------")
-            print(base_link_transform)
+            # print("--------")
+            # print(base_link_transform)
             # print(base_link_transform)
 
             base_link_transformation = tf.transformations.quaternion_matrix(
@@ -49,16 +49,16 @@ def talker():
             # print(left_cam_position)
             left_cam_matrix = np.dot(base_link_transformation, left_to_base)
 
-            print('-----')
+            # print('-----')
             # print("left_cam transformation matrix")
-            print(left_cam_matrix)
+            # print(left_cam_matrix)
 
             # print("right_cam transformation matrix")
             # print(right_cam_matrix)
             # print(tf.transformations.translation_from_matrix(left_cam_matrix))
 
             br = tf.TransformBroadcaster()
-            br.sendTransform(np.dot(left_cam_matrix, [0.0, 0.0, 0.0, 1.0]),
+            br.sendTransform(np.dot(base_link_transformation, [-0.05, 0.0, 0.0, 1.0]),
                              [base_link_transform.transform.rotation.x,
                               base_link_transform.transform.rotation.y,
                               base_link_transform.transform.rotation.z,
@@ -67,10 +67,10 @@ def talker():
                              "left_cam",
                              "world")
             br.sendTransform([0.1, 0.0, 0.0],
-                             [0.0, 0.0, 0.0, 0.0],
+                             [0.0, 0.0, 0.0, 1.0],
                              rospy.Time.now(),
                              "right_cam",
-                             "world")
+                             "left_cam")
         except (tf2_ros.LookupException, tf2_ros.ConnectivityException,
                 tf2_ros.ExtrapolationException):
             rate.sleep()
